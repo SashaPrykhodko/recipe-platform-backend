@@ -14,15 +14,14 @@ public class TestDatabaseConfiguration {
 
     @Bean
     PostgreSQLContainer<?> postgresContainer() {
-        try (PostgreSQLContainer<?> container = new PostgreSQLContainer<>(DockerImageName.parse("postgres:16"))
+        PostgreSQLContainer<?> container = new PostgreSQLContainer<>(DockerImageName.parse("postgres:16"))
                 .withDatabaseName("recipes_test")
                 .withUsername("admin")
                 .withPassword("password")
-                .withEnv("TZ", "UTC")) {
+                .withEnv("TZ", "UTC");
 
-            container.start();
-            return container;
-        }
+        container.start();
+        return container;
     }
 
     @Bean
