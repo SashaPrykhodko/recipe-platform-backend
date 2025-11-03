@@ -1,0 +1,17 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+
+logging:
+  level:
+    root: INFO
+    com.oprykhodko.recipeplatformbackend: DEBUG
+    org.testcontainers: INFO
+    org.springframework.test: DEBUG
