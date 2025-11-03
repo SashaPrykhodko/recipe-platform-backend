@@ -14,6 +14,10 @@ java {
 	}
 }
 
+tasks.named('bootRun') {
+	systemProperty 'user.timezone', 'UTC'
+}
+
 repositories {
 	mavenCentral()
 }
@@ -24,6 +28,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.flywaydb:flyway-database-postgresql'
+	implementation 'org.postgresql:postgresql'
+	implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
