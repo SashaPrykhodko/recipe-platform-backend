@@ -13,7 +13,7 @@ import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 @Entity
@@ -23,47 +23,51 @@ public class User {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotBlank
     @Size(min = 3, max = 50)
     @Column(name = "username", unique = true, nullable = false)
     private String username;
 
-    @Email @NotBlank @Size(max = 100)
+    @Email
+    @NotBlank
+    @Size(max = 100)
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "password_hash")
+    @NotBlank
+    @Size(max = 255)
+    @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-    @Column(name = "display_name")
+    @Size(max = 100)
+    @Column(name = "display_name", length = 100)
     private String displayName;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+    private OffsetDateTime createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private OffsetDateTime updatedAt;
 
     public User(String username, String email, String passwordHash, String displayName) {
         this.username = username;
         this.email = email;
         this.passwordHash = passwordHash;
         this.displayName = displayName;
-        this.createdAt = LocalDateTime.now();
     }
 
     public User() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -99,19 +103,19 @@ public class User {
         this.displayName = displayName;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public OffsetDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
