@@ -1,20 +1,25 @@
 package com.oprykhodko.recipeplatformbackend.entity;
 
 import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
 import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-@SpringBootTest
 class UserEntityTest {
 
-    @Autowired
-    private Validator validator;
+    private static Validator validator;
+
+    @BeforeAll
+    static void setUp() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+    }
 
     @Test
     void shouldFailValidationWhenUsernameIsTooShort() {
@@ -61,7 +66,6 @@ class UserEntityTest {
     @Test
     void shouldFailValidationWhenEmailIsTooLong() {
         String longEmail = "a".repeat(64) + "@" + "e".repeat(50) + ".com";
-        System.out.println(longEmail.length());
         User user = new User("testuser", longEmail, "hashedPassword123", "Test User");
 
         Set<ConstraintViolation<User>> violations = validator.validate(user);

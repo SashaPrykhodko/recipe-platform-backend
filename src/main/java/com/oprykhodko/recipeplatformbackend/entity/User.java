@@ -76,7 +76,7 @@ public class User {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = Objects.requireNonNull(username, "username cannot be null");
     }
 
     public String getEmail() {
@@ -84,7 +84,7 @@ public class User {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = Objects.requireNonNull(email, "email cannot be null");
     }
 
     public String getPasswordHash() {
@@ -92,7 +92,7 @@ public class User {
     }
 
     public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+        this.passwordHash = Objects.requireNonNull(passwordHash, "passwordHash cannot be null");
     }
 
     public String getDisplayName() {
