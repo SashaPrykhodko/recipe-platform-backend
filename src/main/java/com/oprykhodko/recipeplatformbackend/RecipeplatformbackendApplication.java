@@ -11,3 +11,4 @@ public class RecipeplatformbackendApplication {
 	}
 
 }
+// Test Jira integration
