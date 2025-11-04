@@ -54,9 +54,9 @@ public class User {
     private OffsetDateTime updatedAt;
 
     public User(String username, String email, String passwordHash, String displayName) {
-        this.username = username;
-        this.email = email;
-        this.passwordHash = passwordHash;
+        this.username = Objects.requireNonNull(username, "username cannot be null");
+        this.email = Objects.requireNonNull(email, "email cannot be null");
+        this.passwordHash = Objects.requireNonNull(passwordHash, "passwordHash cannot be null");
         this.displayName = displayName;
     }
 
