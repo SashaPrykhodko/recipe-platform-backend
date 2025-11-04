@@ -17,6 +17,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.lang.NonNull;
 
 import java.time.OffsetDateTime;
 import java.util.Objects;
@@ -40,19 +41,23 @@ public class Recipe {
     private String description;
 
     @Min(0)
+    @NonNull
     @Column(name = "prep_time_minutes")
     private Integer prepTimeMinutes;
 
     @Min(0)
+    @NonNull
     @Column(name = "cook_time_minutes")
     private Integer cookTimeMinutes;
 
     @Min(1)
+    @NonNull
     @Column(name = "servings")
     private Integer servings;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "difficulty", length = 20)
+    @NonNull
+    @Column(name = "difficulty", length = 20, nullable = false)
     private Difficulty difficulty;
 
     @NotNull
@@ -74,10 +79,10 @@ public class Recipe {
                   Integer cookTimeMinutes, Integer servings, Difficulty difficulty, User user) {
         this.title = Objects.requireNonNull(title, "Title cannot be null");
         this.description = Objects.requireNonNull(description, "Description cannot be null");
-        this.prepTimeMinutes = prepTimeMinutes;
-        this.cookTimeMinutes = cookTimeMinutes;
-        this.servings = servings;
-        this.difficulty = difficulty;
+        this.prepTimeMinutes = Objects.requireNonNull(prepTimeMinutes, "PrepTimeMinutes cannot be null");
+        this.cookTimeMinutes = Objects.requireNonNull(cookTimeMinutes, "CookTimeMinutes cannot be null");
+        this.servings = Objects.requireNonNull(servings, "Servings cannot be null");
+        this.difficulty = Objects.requireNonNull(difficulty, "Difficulty cannot be null");
         this.user = Objects.requireNonNull(user, "User cannot be null");
     }
 

@@ -85,12 +85,9 @@ class RecipeTest {
     }
 
     @Test
-    void shouldPassValidationWithNullOptionalFields() {
-        Recipe recipe = new Recipe("Simple Recipe", "Description", null, null, null, null, testUser);
-
-        Set<ConstraintViolation<Recipe>> violations = validator.validate(recipe);
-
-        assertThat(violations).isEmpty();
+    void shouldThrowExceptionWhenConstructorCalledWithNullDifficulty() {
+        assertThatThrownBy(() -> new Recipe("Valid Title", "Description", 30, 45, 4, null, testUser))
+            .isInstanceOf(NullPointerException.class);
     }
 
     @Test
@@ -136,6 +133,40 @@ class RecipeTest {
         assertThatThrownBy(() -> new Recipe(null, "Description", 30, 45, 4, Difficulty.EASY, testUser))
             .isInstanceOf(NullPointerException.class)
             .hasMessage("Title cannot be null");
+    }
+
+    @Test
+    void shouldThrowExceptionWhenConstructorCalledWithNullDescription() {
+        assertThatThrownBy(() -> new Recipe("Valid Title", null, 30, 45, 4, Difficulty.EASY, testUser))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessage("Description cannot be null");
+    }
+
+    @Test
+    void shouldThrowExceptionWhenSetterCalledWithNullTitle() {
+        Recipe recipe = new Recipe("Valid Title", "Description", 30, 45, 4, Difficulty.EASY, testUser);
+        
+        assertThatThrownBy(() -> recipe.setTitle(null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessage("Title cannot be null");
+    }
+
+    @Test
+    void shouldThrowExceptionWhenSetterCalledWithNullDescription() {
+        Recipe recipe = new Recipe("Valid Title", "Description", 30, 45, 4, Difficulty.EASY, testUser);
+        
+        assertThatThrownBy(() -> recipe.setDescription(null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessage("Description cannot be null");
+    }
+
+    @Test
+    void shouldThrowExceptionWhenSetterCalledWithNullUser() {
+        Recipe recipe = new Recipe("Valid Title", "Description", 30, 45, 4, Difficulty.EASY, testUser);
+        
+        assertThatThrownBy(() -> recipe.setUser(null))
+            .isInstanceOf(NullPointerException.class)
+            .hasMessage("User cannot be null");
     }
 
     @Test
