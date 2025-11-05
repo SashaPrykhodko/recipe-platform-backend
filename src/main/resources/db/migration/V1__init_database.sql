@@ -14,7 +14,7 @@ CREATE TABLE users (
 -- Recipes table
 CREATE TABLE recipes (
                          id BIGSERIAL PRIMARY KEY,
-                         title VARCHAR(200) NOT NULL,
+                         title VARCHAR(200) UNIQUE NOT NULL,
                          description TEXT,
                          prep_time_minutes INTEGER,
                          cook_time_minutes INTEGER,

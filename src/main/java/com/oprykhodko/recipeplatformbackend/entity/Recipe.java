@@ -1,5 +1,6 @@
 package com.oprykhodko.recipeplatformbackend.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -31,7 +32,7 @@ public class Recipe {
 
     @NotBlank
     @Size(max = 200)
-    @Column(name = "title", nullable = false, length = 200)
+    @Column(name = "title", nullable = false, length = 200, unique = true)
     private String title;
 
     @NotBlank
@@ -60,7 +61,8 @@ public class Recipe {
     private Difficulty difficulty;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

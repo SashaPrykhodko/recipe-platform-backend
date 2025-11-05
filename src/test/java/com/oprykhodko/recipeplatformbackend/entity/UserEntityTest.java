@@ -92,4 +92,64 @@ class UserEntityTest {
 
         assertThat(violations).isEmpty();
     }
+
+    @Test
+    void nullRecipeShouldNotBeAccepted() {
+        User user = new User("John Smith", "test@example.com", "hashedPassword123", "Test User");
+        user.addRecipe(null);
+    }
+
+    @Test
+    void shouldAddRecipeAndSetBidirectionalRelationship() {
+        User user = new User("testuser", "test@example.com", "hash", "Test User");
+        Recipe recipe = new Recipe("Test Recipe", "Description", 30, 45, 4, Difficulty.EASY, user);
+
+        user.addRecipe(recipe);
+
+        assertThat(user.getRecipes()).hasSize(1);
+        assertThat(user.getRecipes()).contains(recipe);
+        assertThat(recipe.getUser()).isEqualTo(user);
+    }
+
+    @Test
+    void shouldHandleNullRecipe() {
+        User user = new User("testuser", "test@example.com", "hash", "Test User");
+
+        user.addRecipe(null);
+
+        assertThat(user.getRecipes()).isEmpty();
+    }
+
+    @Test
+    void shouldPreventDuplicateRecipes() {
+        User user = new User("testuser", "test@example.com", "hash", "Test User");
+        Recipe recipe = new Recipe("Test Recipe", "Description", 30, 45, 4, Difficulty.EASY, user);
+
+        user.addRecipe(recipe);
+        user.addRecipe(recipe); // Add same recipe twice
+
+        assertThat(user.getRecipes()).hasSize(1);
+    }
+
+    @Test
+    void shouldNotRemoveIfRecipeIsNull() {
+        User user = new User("testuser", "test@example.com", "hash", "Test User");
+        Recipe recipe = new Recipe("Test Recipe", "Description", 30, 45, 4, Difficulty.EASY, user);
+        user.addRecipe(recipe);
+        assertThat(user.getRecipes()).hasSize(1);
+
+        user.removeRecipe(null);
+        assertThat(user.getRecipes()).hasSize(1);
+    }
+
+    @Test
+    void shouldNotRemoveIfRecipesIsNull() {
+        User user = new User("testuser", "test@example.com", "hash", "Test User");
+
+        assertThat(user.getRecipes()).isEmpty();
+
+        user.removeRecipe(null);
+        assertThat(user.getRecipes()).isEmpty();
+    }
+
 }
