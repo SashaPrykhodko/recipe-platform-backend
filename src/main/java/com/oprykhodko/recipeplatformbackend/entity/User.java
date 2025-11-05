@@ -126,6 +126,28 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
+    public List<Recipe> getRecipes() {
+        return recipes == null ? new ArrayList<>() : new ArrayList<>(recipes);
+    }
+
+    public void addRecipe(Recipe recipe) {
+        if (recipes == null) {
+            recipes = new ArrayList<>();
+        }
+
+        if (recipe != null && !recipes.contains(recipe)) {
+            recipes.add(recipe);
+            recipe.setUser(this);
+        }
+    }
+
+    public void removeRecipe(Recipe recipe) {
+        if (!recipes.isEmpty() && recipe != null) {
+            recipes.remove(recipe);
+            recipe.setUser(null);
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
