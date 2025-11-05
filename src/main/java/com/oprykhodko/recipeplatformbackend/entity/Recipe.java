@@ -17,7 +17,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.lang.NonNull;
 
 import java.time.OffsetDateTime;
 import java.util.Objects;
@@ -41,22 +40,22 @@ public class Recipe {
     private String description;
 
     @Min(0)
-    @NonNull
+    @NotNull
     @Column(name = "prep_time_minutes")
     private Integer prepTimeMinutes;
 
     @Min(0)
-    @NonNull
+    @NotNull
     @Column(name = "cook_time_minutes")
     private Integer cookTimeMinutes;
 
     @Min(1)
-    @NonNull
+    @NotNull
     @Column(name = "servings")
     private Integer servings;
 
     @Enumerated(EnumType.STRING)
-    @NonNull
+    @NotNull
     @Column(name = "difficulty", length = 20, nullable = false)
     private Difficulty difficulty;
 
@@ -73,7 +72,8 @@ public class Recipe {
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
-    public Recipe() {}
+    public Recipe() {
+    }
 
     public Recipe(String title, String description, Integer prepTimeMinutes,
                   Integer cookTimeMinutes, Integer servings, Difficulty difficulty, User user) {
@@ -86,41 +86,90 @@ public class Recipe {
         this.user = Objects.requireNonNull(user, "User cannot be null");
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = Objects.requireNonNull(title, "Title cannot be null"); }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = Objects.requireNonNull(description, "Description cannot be null"); }
+    public String getTitle() {
+        return title;
+    }
 
-    public Integer getPrepTimeMinutes() { return prepTimeMinutes; }
-    public void setPrepTimeMinutes(Integer prepTimeMinutes) { this.prepTimeMinutes = prepTimeMinutes; }
+    public void setTitle(String title) {
+        this.title = Objects.requireNonNull(title, "Title cannot be null");
+    }
 
-    public Integer getCookTimeMinutes() { return cookTimeMinutes; }
-    public void setCookTimeMinutes(Integer cookTimeMinutes) { this.cookTimeMinutes = cookTimeMinutes; }
+    public String getDescription() {
+        return description;
+    }
 
-    public Integer getServings() { return servings; }
-    public void setServings(Integer servings) { this.servings = servings; }
+    public void setDescription(String description) {
+        this.description = Objects.requireNonNull(description, "Description cannot be null");
+    }
 
-    public Difficulty getDifficulty() { return difficulty; }
-    public void setDifficulty(Difficulty difficulty) { this.difficulty = difficulty; }
+    public Integer getPrepTimeMinutes() {
+        return prepTimeMinutes;
+    }
 
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = Objects.requireNonNull(user, "User cannot be null"); }
+    public void setPrepTimeMinutes(Integer prepTimeMinutes) {
+        this.prepTimeMinutes = prepTimeMinutes;
+    }
 
-    public OffsetDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(OffsetDateTime createdAt) { this.createdAt = createdAt; }
+    public Integer getCookTimeMinutes() {
+        return cookTimeMinutes;
+    }
 
-    public OffsetDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(OffsetDateTime updatedAt) { this.updatedAt = updatedAt; }
+    public void setCookTimeMinutes(Integer cookTimeMinutes) {
+        this.cookTimeMinutes = cookTimeMinutes;
+    }
+
+    public Integer getServings() {
+        return servings;
+    }
+
+    public void setServings(Integer servings) {
+        this.servings = servings;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = Objects.requireNonNull(user, "User cannot be null");
+    }
+
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Recipe)) return false;
-        Recipe recipe = (Recipe) o;
+        if (!(o instanceof Recipe recipe)) return false;
         return Objects.equals(id, recipe.id);
     }
 
