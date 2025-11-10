@@ -92,12 +92,20 @@ src/
 ├── main/
 │   ├── java/com/oprykhodko/recipeplatformbackend/
 │   │   ├── entity/          # JPA entities
+│   │   ├── repository/      # Data access layer with JPA repositories
 │   │   └── RecipeplatformbackendApplication.java
 │   └── resources/
 │       └── db/migration/    # Flyway migrations
 └── test/
     └── java/               # Test classes
 ```
+
+## Repository Layer
+
+The application includes custom repository methods to handle lazy loading relationships:
+
+- **UserRepository**: Includes `findUserWithRecipes()` and `findAllUsersWithRecipes()` methods using JOIN FETCH to eagerly load user recipes
+- **RecipeRepository**: Includes `findByIdWithUser()` and `findAllWithUsers()` methods using JOIN FETCH to eagerly load recipe authors
 
 ## Contributing
 
