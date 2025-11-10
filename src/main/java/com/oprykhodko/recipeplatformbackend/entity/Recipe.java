@@ -182,6 +182,19 @@ public class Recipe {
 
     @Override
     public String toString() {
-        return "Recipe{id=" + id + ", title='" + title + "', difficulty=" + difficulty + "}";
+        String userInfo = "not loaded";
+        try {
+            if (user != null) {
+                userInfo = "User{id=" + user.getId() + ", username='" + user.getUsername() + "'}";
+            }
+        } catch (Exception e) {
+            userInfo = "lazy loading failed";
+        }
+        
+        return "Recipe{id=" + id +
+                ", title='" + title + '\'' +
+                ", difficulty=" + difficulty +
+                ", user=" + userInfo +
+                "}";
     }
 }

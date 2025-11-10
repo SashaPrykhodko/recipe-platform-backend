@@ -4,6 +4,7 @@ package com.oprykhodko.recipeplatformbackend.entity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -57,7 +58,7 @@ public class User {
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Recipe> recipes = new ArrayList<>();
 
     public User(String username, String email, String passwordHash, String displayName) {
@@ -162,11 +163,25 @@ public class User {
 
     @Override
     public String toString() {
+        String recipeInfo = "not loaded";
+        try {
+            if (recipes != null && !recipes.isEmpty()) {
+                recipeInfo = recipes.stream()
+                    .map(Recipe::getTitle)
+                    .toList().toString();
+            } else if (recipes != null) {
+                recipeInfo = "[]";
+            }
+        } catch (Exception e) {
+            recipeInfo = "lazy loading failed";
+        }
+        
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", displayName='" + displayName + '\'' +
+                ", recipes=" + recipeInfo +
                 '}';
     }
 }
