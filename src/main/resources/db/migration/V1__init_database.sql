@@ -1,5 +1,8 @@
 -- Initial database schema for Recipe Platform
 
+-- Set the schema to public
+SET search_path TO public;
+
 -- Users table
 CREATE TABLE users (
                        id BIGSERIAL PRIMARY KEY,
